@@ -24,12 +24,12 @@ public class ContactService {
         contactRepository.updateContact(contact);
     }
 
-    public void deleteContact(String email) {
-        contactRepository.deleteContact(email);
+    public void deleteContact(String firstName) {
+        contactRepository.deleteContact(firstName);
     }
 
-    public Contact getContact(String email) {
-        return contactRepository.getContact(email);
+    public Contact getContact(String firstName) {
+        return contactRepository.getContact(firstName);
     }
 
     public Collection<Contact> getAllContacts() {

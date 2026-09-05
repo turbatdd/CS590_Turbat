@@ -20,20 +20,20 @@ public class ContactsController {
         contactService.addContact(contact);
     }
 
-    @PutMapping("/{email}")
-    public void updateBook(@PathVariable String email, @RequestBody Contact contact) {
-        contact.setEmail(email);
+    @PutMapping("/{firstName}")
+    public void updateBook(@PathVariable String firstName, @RequestBody Contact contact) {
+        contact.setFirstName(firstName);
         contactService.updateContact(contact);
     }
 
-    @DeleteMapping("/{email}")
-    public void deleteBook(@PathVariable String email) {
-        contactService.deleteContact(email);
+    @DeleteMapping("/{firstName}")
+    public void deleteBook(@PathVariable String firstName) {
+        contactService.deleteContact(firstName);
     }
 
-    @GetMapping("/{email}")
-    public Contact getBook(@PathVariable String email) {
-        return contactService.getContact(email);
+    @GetMapping("/{firstName}")
+    public Contact getBook(@PathVariable String firstName) {
+        return contactService.getContact(firstName);
     }
 
     @GetMapping

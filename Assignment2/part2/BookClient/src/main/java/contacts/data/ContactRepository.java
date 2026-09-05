@@ -1,8 +1,6 @@
 package contacts.data;
 
-import contacts.Contacts;
 import contacts.domain.Contact;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -21,12 +19,12 @@ public class ContactRepository {
         contactData.put(contact.getEmail(), contact);
     }
 
-    public void deleteContact(String email) {
-        contactData.remove(email);
+    public void deleteContact(String firstName) {
+        contactData.remove(firstName);
     }
 
-    public Contact getContact(String email) {
-        return contactData.get(email);
+    public Contact getContact(String firstName) {
+        return contactData.get(firstName);
     }
 
     public Collection<Contact> getAllContacts() {

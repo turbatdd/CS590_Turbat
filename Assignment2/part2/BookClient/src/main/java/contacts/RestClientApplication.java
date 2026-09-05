@@ -21,33 +21,35 @@ public class RestClientApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		String serverUrl = "http://localhost:8080/contacts";
+		String frankEmail = "fbrowns@acme.com";
+		String johnEmail = "jdoe@acme.com";
 
 		// add Frank
-		restTemplate.postForLocation(serverUrl, new Contact("Frank","Browns", "fbrowns@acme.com",
+		restTemplate.postForLocation(serverUrl, new Contact("Frank","Browns", frankEmail,
 				"0639332163"));
 		// add John
-		restTemplate.postForLocation(serverUrl, new Contact("John","Doe", "jdoe@acme.com",
+		restTemplate.postForLocation(serverUrl, new Contact("John","Doe", johnEmail,
 				"6739127563"));
 		// get frank
-		Contact contact= restTemplate.getForObject(serverUrl+"/{firstName}", Contact.class, "Frank");
-		System.out.println("----------- get John-----------------------");
+		Contact contact= restTemplate.getForObject(serverUrl+"/{email}", Contact.class, frankEmail);
+		System.out.println("----------- get Frank-----------------------");
 		System.out.println(contact.getFirstName()+" "+contact.getLastName());
         // get all
-		Contacts contacts= restTemplate.getForObject(serverUrl, Contacts.class);
+		Contact[] contacts= restTemplate.getForObject(serverUrl, Contact[].class);
 		System.out.println("----------- get all contacts-----------------------");
-		System.out.println(contacts);
+		System.out.println(java.util.Arrays.toString(contacts));
 
 		// delete John
-		restTemplate.delete(serverUrl+"/{firstName}", "John");
+		restTemplate.delete(serverUrl+"/{email}", johnEmail);
 
 		// update frank
 		contact.setEmail("franky@gmail.com");
-		restTemplate.put(serverUrl+"/{firstName}", contact, contact.getFirstName());
+		restTemplate.put(serverUrl+"/{email}", contact, contact.getEmail());
 
 		// get all
-		contacts= restTemplate.getForObject(serverUrl, Contacts.class);
+		contacts= restTemplate.getForObject(serverUrl, Contact[].class);
 		System.out.println("----------- get all contacts-----------------------");
-		System.out.println(contacts);
+		System.out.println(java.util.Arrays.toString(contacts));
 	}
 
 
