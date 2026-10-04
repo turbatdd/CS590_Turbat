@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+	<channel id="wharehousechannel"/>
+	<channel id="orderTypeChannel"/>
+	<channel id="domesticOrdersChannel"/>
+	<channel id="internationalOrdersChannel"/>
+	<channel id="nextDayShippingChannel"/>
+	<channel id="normalShippingChannel"/>
+
+	<service-activator input-channel="wharehousechannel"
+	                   output-channel="orderTypeChannel"
+	                   ref="warehouseservice"
+	                   method="checkStock"/>
+
+	<router input-channel="orderTypeChannel" expression="payload.orderType">
+		<mapping value="domestic" channel="domesticOrdersChannel"/>
+		<mapping value="international" channel="internationalOrdersChannel"/>
+	</router>
+
+	<router input-channel="domesticOrdersChannel" expression="payload.amount &gt; 175">
+		<mapping value="true" channel="nextDayShippingChannel"/>
+		<mapping value="false" channel="normalShippingChannel"/>
+	</router>
+
+	<service-activator input-channel="nextDayShippingChannel"
+	                   ref="shippingservice"
+	                   method="shipNextDay"/>
+
+	<service-activator input-channel="normalShippingChannel"
+	                   ref="shippingservice"
+	                   method="shipNormally"/>
+
+	<service-activator input-channel="internationalOrdersChannel"
+	                   ref="shippingservice"
+	                   method="shipInternationally"/>
+	                   
+	<beans:bean id="warehouseservice" class="esb.WarehouseActivator"/>
+	<beans:bean id="shippingservice" class="esb.ShippingActivator"/>
+
+	
+</beans:beans>
