@@ -1,10 +1,10 @@
-package miu.sa.StockService;
+package miu.sa.ShopService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StockServiceApplicationTests {
+class ShopServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

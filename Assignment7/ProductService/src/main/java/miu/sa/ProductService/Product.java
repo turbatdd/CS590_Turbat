@@ -1,41 +1,30 @@
 package miu.sa.ProductService;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "products")
 public class Product {
-
-    private int productNumber;
+    @Id
+    private String productNumber;
     private String name;
-    private int numberOnStock;
+    private double price;
+    private String description;
 
-    public Product() {
-    }
+    public Product() {}
 
-    public Product(int productNumber, String name, int numberOnStock) {
-        this.productNumber = productNumber;
-        this.name = name;
-        this.numberOnStock = numberOnStock;
-    }
-
-    public int getProductNumber() {
-        return productNumber;
-    }
-
-    public void setProductNumber(int productNumber) {
+    public String getProductNumber() { return productNumber; }
+    public void setProductNumber(String productNumber) {
         this.productNumber = productNumber;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
-    public int getNumberOnStock() {
-        return numberOnStock;
-    }
-
-    public void setNumberOnStock(int numberOnStock) {
-        this.numberOnStock = numberOnStock;
+    public String getDescription() { return description; }
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
