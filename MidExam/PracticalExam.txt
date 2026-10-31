@@ -1,0 +1,121 @@
+1. I would choose client-side load balancing because we have only 8 microservices and no service registry or API gateway. Each service can choose which instance to call and share requests between them. This is simple, fast, and does not need extra tools.
+2. 
+	a. CAP theorem says that a distributed system has three properties:
+		- Consistency: Everyone sees the same data.
+		- Availability: The system responds to every request.
+		- Partition Tolerance: The system keeps working when servers have network problems.
+		When a network problem happens, the system must choose between consistency and availability.
+	b. Service Classes vs. Domain Service Classes
+		No, they are different. 
+		Service classes: Manage the steps of a task and connect different parts of the application.
+		Domain service classes: Handle business rules that do not belong to one specific object.
+3. 	
+	a. Elasticsearch uses an inverted index to find words quickly. It stores each word and the documents that contain it. This 		helps Elasticsearch find matching documents without checking every document one by one.
+	b. Horizontal scaling: Add more servers to handle more requests.
+	   Vertical scaling: Add more CPU, memory, or power to an existing server.
+	c. Four advantages of microservices over a modular monolith
+		- Independent deployment
+		- Independent scaling
+		- Technology flexibility
+		- Fault isolation
+	d. Three advantages of a modular monolith over microservices
+		- Easier development
+		- Simpler testing
+		- Easier deployment
+4. 
+	public interface ProductService {
+    		void addProduct(Product product);
+    		void updateProduct(Product product);
+    		void removeProduct(String productNumber);
+    		Product getProduct(String productNumber);
+    		List<Product> searchProducts(String name, String category);
+	}
+
+	public interface ShoppingCartService {
+    		void addProduct(String cartId, String productNumber, int quantity);
+   		void removeProduct(String cartId, String productNumber);
+		ShoppingCart getShoppingCart(String cartId);
+	}
+
+
+7. 
+
+public class Location {
+    private int longitude;
+    private int latitude;
+    private int altitude;
+
+   
+    public Location(int longitude, int latitude, int altitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.altitude = altitude;
+        validate();
+    }
+
+    
+    private void validate() {
+        if (longitude < 0 || latitude < 0 || altitude < 0) {
+            throw new IllegalArgumentException("Longitude, latitude, and altitude must be positive numbers");
+        }
+    }
+
+   
+    public void addLongitude(int longitudeValue) {
+        this.longitude += longitudeValue;
+        if (longitudeValue < 0) {
+            this.altitude += longitudeValue; 
+        }
+        validate();
+    }
+
+   
+    public void addLatitude(int latitudeValue) {
+        this.latitude += latitudeValue;
+        if (latitudeValue < 0) {
+            this.altitude += latitudeValue; 
+        }
+        validate();
+    }
+
+    public void addAltitude(int altitudeValue) {
+        this.altitude += altitudeValue;
+        validate();
+    }
+
+    public int getLongitude() {
+        return longitude;
+    }
+
+    public int getLatitude() {
+        return latitude;
+    }
+
+    public int getAltitude() {
+        return altitude;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return longitude == location.longitude &&
+                latitude == location.latitude &&
+                altitude == location.altitude;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(longitude, latitude, altitude);
+    }
+
+    @Override
+    public String toString() {
+        return "Location{longitude=" + longitude + ", latitude=" + latitude + ", altitude=" + altitude + "}";
+    }
+}
+
+8. A stream-based architecture is related to Science of Creative Intelligence (SCI) because different parts work together as one system. Data flows from one component to another, and each component has its own job. This is similar to SCI because everything is connected and works together as a whole.
+
+Another connection is the idea of order and organization. In a stream-based system, data moves through different components in an organized way. For example, in a food delivery app, the system sends an order to the restaurant, updates the order status, and notifies the customer. All these activities work together to complete one process. This is similar to SCI because different activities work together toward one goal.
